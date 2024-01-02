@@ -1,4 +1,5 @@
 ---
+import Header from '../components/Header.astro';
 interface Props {
 	title: string;
 }
@@ -13,39 +14,54 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;700&family=Roboto+Serif:opsz,wght@8..144,300;8..144,400;8..144,500;8..144,700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body>
-		<slot />
+	<body class="bg-cblanco">
+		<Header/>
+		<main>
+			<slot />
+		</main>
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+
+<style is:global> 
+	*{
+		color: #191E29;
+		font-family: 'Inter', sans-serif;
+		font-family: 'Noto Sans', sans-serif;
+		font-family: 'Roboto', sans-serif;
+		font-family: 'Roboto Serif', serif;
 	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
+	.principal {
+		font-size: 34px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -1.32px;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+	.subtitulo {
+		font-size: 22px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.26px;
+	}
+	.parrafo {
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 145%;
+		letter-spacing: 0.18px;
+	}
+	.subparrafo {
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 150%;
+		letter-spacing: 0.42px;
 	}
 </style>
