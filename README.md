@@ -1,4 +1,4 @@
-[]# Portafolio Web
+# Portafolio Web
 
 ¡Bienvenido a mi portafolio web! Este sitio fue desarrollado utilizando [Astro](https://astro.build/) y estilizado con [Tailwind CSS](https://tailwindcss.com/). Además, se han utilizado HTML, CSS y JavaScript para ofrecer una experiencia web completa y dinámica.
 
