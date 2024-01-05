@@ -1,17 +1,32 @@
 ---
-
+import Card from "./Card.astro";
 ---
 
-<div id="Proyectos" class="h-screen flex items-center justify-evenly mt-20 lg:mt-0 px-10 lg:mx-20 flex-wrap">
-    <div>
-        <div class="max-w-96 text-center lg:text-left">
-            <h6 class="subtitulo text-csecundario">ACA IRAN LOS PROYECTOS</h6>
-        </div>    
-        <div class="flex items-center justify-center lg:justify-start">
-            <a id="prueba" href="#" class="w-full lg:max-w-64 mt-5 bg-cprincipal text-center text-cblanco py-3 px-10 rounded-full font-bold shadow-md shadow-cprincipal/40 hover:bg-choverprincipal transition-all ease-in-out hover:scale-110">Habilidades</a>
+<div id="Proyectos" class="h-screen flex items-center justify-center mt-20 lg:mt-0 px-10 lg:mx-20 flex-wrap">
+    <div> 
+        <div class="text-center lg:text-left mb-10">
+            <p class="subtitulo text-csecundario text-center">Proyectos</p>
+            <p class="text-cprincipal parrafo text-center mt-6">CREADOS EN UN ENTORNO LABORAL, NO SON PROYECTOS EDUCATIVOS NI PERSONALES</p>
+        </div>
+        <div class="flex space-x-6 flex-wrap">
+            <Card 
+            img= "../../src/imgs/ProyectoLogin.webp"
+            titulo= "Portal educativo"
+            descripcion= "Se crearón las vistas en los modulos para ver las notas de los estudiantes, historial de enfermeria, pasarela de pagos, ETC"
+            img= "../../src/imgs/ProyectoLogin.webp"
+            />
+            <Card 
+            img= "../../src/imgs/ProyectoLogin.webp"
+            titulo= "Portal educativo"
+            descripcion= "Se crearón las vistas en los modulos para ver las notas de los estudiantes, historial de enfermeria, pasarela de pagos, ETC"
+            img= "../../src/imgs/ProyectoLogin.webp"
+            />
+            <Card 
+            img= "../../src/imgs/ProyectoLogin.webp"
+            titulo= "Portal educativo"
+            descripcion= "Se crearón las vistas en los modulos para ver las notas de los estudiantes, historial de enfermeria, pasarela de pagos, ETC"
+            img= "../../src/imgs/ProyectoLogin.webp"
+            />
         </div>
     </div>
-    <div class="hidden lg:block">
-        Proyectos
-    </div>        
 </div>

@@ -1,0 +1,977 @@
+<?php
+//if($_SERVER["HTTP_HOST"]=='10.80.0.13' or $_SERVER["HTTP_HOST"]=='201.217.200.70:2013'){
+    include('configgoogle.php');
+//}
+if ($_GET['Sucursal'] == '24') {
+  $Empre = 'LICEO COMFACUNDI';
+  $LogoEmpre = 'header-logo24.png';
+  $UrlEmpre = 'https://www.comfacundi.com.co/liceocomfacundi/';
+} elseif ($_GET['Sucursal'] == '54') {
+  $Empre = 'CENTRO DEL INMACULADO CORAZÓN DE MARÍA (CICMA)';
+  $LogoEmpre = 'header-logo54.png';
+  $UrlEmpre = 'https://colegiocicmapopayan.wixsite.com/cicma/';
+} else {
+  $Empre = 'Colegios Minuto de Dios';
+  $LogoEmpre = 'header-logo.png';
+  $UrlEmpre = 'http://www.colegiosminutodedios.edu.co';
+}
+?>
+<!-- //*****************************************************************************************************
+//********************************************** CODIGO BÁSICO *********************************************
+//********************************************************************************************************** -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="¡Plataforma integral para estudiantes! Nuestra página web es tu central de operaciones educativas, ofreciendo un espacio unificado para acceder a una variedad de modulos esenciales.">
+  <title>Ingreso EstuNET</title>
+  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>  
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body <?php if ($_GET['DatoObser']) { ?>onLoad="MostrarDatoObser('<b>Alerta</b> <?php echo $_GET['DatoObser']; ?>');" <?php } ?>>
+  <div class="myAlert-top alert alert-success" id="DatoObser" style="z-index:1000000; display:<?php echo 'none'; ?>">
+  </div>
+  <div class="section">
+    <div class="container">
+
+      <div class="row full-height justify-content-center">
+        <div class="col-12 text-center align-self-center py-5">
+          <div class="section pb-5 pt-5 pt-sm-2 text-center">
+            <!--  ********************************************
+                  ********  titulo de estudiante o padre *********
+                  ******************************************** -->
+            <h6 class="mb-0 pb-3"><span>ESTUDIANTE</span><span>PADRE</span></h6>
+            <!--  ********************************************
+                  ********  titulo de estudiante o padre *********
+                  ******************************************** -->
+            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+            <label for="reg-log"></label>
+            <div class="card-3d-wrap mx-auto">
+              <div class="card-3d-wrapper">
+
+                <div class="card-front" style="display: flex;">
+
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4 class="mb-0 pb-1">Estudiante</h4>
+                      <span class="d-none d-sm-block mb-1">Puedes usar tu código de estudiante o tu correo institucional</span>
+                      <form method="post" enctype="multipart/form-data" id="sign-up-form">
+                        <div class="form-group">
+                          <input autocomplete="username" name="Usuario" id="Usuario" type="email" class="campoInputEnter form-style" placeholder="Código" required>
+                          <i class="input-icon uil uil-at" style="color: #76358B;"></i>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input autocomplete="current-password" name="Clave" id="Clave" type="password" class="campoInputEnter form-style" placeholder="Contraseña" required>
+                          <i class="input-icon uil uil-lock-alt" style="color: #76358B;"></i>
+                        </div>
+                        <div class="d-grid">
+                          <button class="btnIngresar btn py-1 btn-block mt-4 rounded-lg justify-content-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ingreso con usuario y contraseña" style="background-color: #FCC045; color: #05437A;" type="button" onClick="ValidarIngreso();">
+                            Ingresar
+                          </button>
+                          <div class="d-flex justify-content-around">
+                            <hr width="40%" style="background-color: white; color: white;">
+                            <span>o</span>
+                            <hr width="40%" style="background-color: white; color: white;">
+                          </div>
+                          <button id="ARecuperarClave" class="btn btn-block justify-content-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ingreso con la cuenta institucional Google" style="background-color: #78cdff; color: #062b4b;" type="button" onClick="window.location.href='<?php echo $google_client->createAuthUrl();?>'">
+                            Ingresa con tu cuenta Google
+                          </button>
+                          <div class="d-flex justify-content-around">
+                            <hr width="40%" style="background-color: white; color: white;">
+                            <span>o</span>
+                            <hr width="40%" style="background-color: white; color: white;">
+                          </div>
+                          <button id="ARecuperarClave" class="btn btn-block justify-content-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ingreso rápido a través de un código de verificación enviado por correo" style="background-color: #f48475; color: #43120c;" type="button" onClick="$('#sign-up-form').hide();$('#FrmRecuperarClave').show();">
+                            Clave de acceso rápido
+                          </button>
+                        </div>
+                      </form>
+                      <form id="FrmRecuperarClave" name="FrmRecuperarClave" value="yes" >
+                        <div class="panel-heading"> <span class="panel-title"> <span class="glyphicon glyphicon-lock dark-color"></span> Recuperar Clave </span> </div>
+                        <div class="panel-body">
+                          <div class="form-group my-2">
+                            <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> </span>
+                              <input id="NomAlum" name="NomAlum" class="form-control" placeholder="Nombres y Apellidos Completos del Estudiante" />
+                            </div>
+                          </div>
+                          <div class="form-group my-2">
+                            <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-link"></span> </span>
+                              <input autocomplete="email" id="Email" name="Email" type="email" class="form-control" placeholder="Email Registrado en el colegio" />
+                            </div>
+                          </div>
+                        </div>
+                        <input class="btn fw-bold" style="background-color: #FCC045; color: #05437A;" name="BotIrRecuperarClave" type="button" id="BotIrRecuperarClave" onClick="EnviarRecuperarClave(form);" value="Enviar">
+                          <div class="row text-center" id="DivResultado">
+                          </div>            
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-back" style="display: flex;">
+                  <div id="claseActivaIn" class="imagenes_cambio d-none d-sm-block"><img src="../imagenes/EstudiantesNET/login-nina.png" alt="Ilustracion de una niña (Estudiante)" style="width:248px; height:476px;"></div>
+                  <div id="claseActivaInBoy" class="imagenes_cambio_inactive d-none d-sm-block"><img src="../imagenes/EstudiantesNET/login-papa.png" alt="Ilustracion de un señor (Padre)" style="width:281px; height:489px"></div>
+                  <style>
+                    .imagenes_cambio {
+                      position: absolute;
+                      z-index: 1000;
+                      right: -235px;
+                    }
+
+                    .imagenes_cambio_inactive {
+                      position: absolute;
+                      z-index: 0;
+                      right: -200px;
+                      opacity: 0;
+                      display: none;
+                    }
+
+
+                    .imagen-estatica :active {
+                      -webkit-transition: opacity 1s;
+                      opacity: 0;
+                    }
+                  </style>
+                  <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                      ingresarConEnter();
+                    });
+                    function ingresarConEnter() {
+                      const btnIngresar = document.querySelector('.btnIngresar');
+                      const campoInputEnter = document.querySelectorAll('.campoInputEnter');
+
+                      campoInputEnter.forEach(function (input) {
+                        input.addEventListener("keypress", function (event) {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                            btnIngresar.click();
+                          }
+                        });
+                      });
+                    }
+
+                    $('#myModal').on('shown.bs.modal', function () {
+                      $('#myInput').trigger('focus')
+                    })
+
+                    const checkbox = document.getElementById('reg-log');
+                    const elemento = document.getElementById('claseActivaIn');
+                    const elementob = document.getElementById('claseActivaInBoy');
+
+                    checkbox.addEventListener('change', function() {
+                      if (this.checked) {
+                        elemento.classList.add('imagenes_cambio_inactive'); // Agrega una nueva clase al elemento
+                        elementob.classList.add('imagenes_cambio')
+                        elementob.classList.remove('imagenes_cambio_inactive')
+                      } else {
+                        elemento.classList.remove('imagenes_cambio_inactive'); // Remueve la nueva clase al desmarcar el checkbox
+                        elemento.classList.add('imagenes_cambio'); // Vuelve a agregar la clase original si es necesario
+                        elementob.classList.remove('imagenes_cambio')
+                        elementob.classList.add('imagenes_cambio_inactive')
+                      }
+                    });
+                  </script>
+                  <div class="center-wrap">
+                    <form action="" method="post" enctype="multipart/form-data" name="FrmIngresoPadre" id="FrmIngresoPadre">
+                      <div class="section text-center">
+                        <h4>Padre</h4>
+                        <span class="d-none d-sm-block mb-3">Ingresa con tu cédula, correo o clave</br>También puedes solicitar un token</span>
+                        <div class="form-group">
+                          <input autocomplete="username" type="text" name="DocumentoPapas" id="DocumentoPapas" class="form-style" placeholder="Usuario">
+                          <i class="input-icon uil uil-user" style="color: #76358B;"></i>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input autocomplete="current-password" type="password" name="ClavePapas" id="ClavePapas" class="form-style" placeholder="Contraseña">
+                          <i class="input-icon uil uil-lock-alt" style="color: #76358B;"></i>
+                        </div>
+                        <button style="background-color: #FCC045; color: #05437A;" onclick="ValidarIngresoPadre(document.FrmIngresoPadre);" class="btnIngresar btn mt-4 btn-block justify-content-center">Ingresar</button>
+                        <div class="d-flex justify-content-around">
+                            <hr width="40%" style="background-color: white; color: white;">
+                            <span>o</span>
+                            <hr width="40%" style="background-color: white; color: white;">
+                          </div>
+                        <button data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ingreso rápido a través de un código de verificación enviado por correo" onclick="SolicitarPIN();" class="btn btn-block justify-content-center" style="background-color: #f48475; color: #43120c;">Clave de acceso rápido</button>
+                        <div class="row" id="DivResultadoPadre">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<?php if($_GET['CodCole']!=50) {?>
+
+  <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="¡Haz click para ver el instructivo!" id="modalInstructivoLink"
+   class="d-none d-md-block position-fixed" style="cursor:pointer; border:none; background-color: transparent; bottom:1rem; right: 1.5rem; font-size: 3.5rem;">
+    <i class="uil uil-question-circle" style="color: #05477d;"></i>
+  </a>
+
+  <a aria-label="Enlace para redirigir a la página principal de los Colegios Minuto de Dios" data-bs-toggle="tooltip" data-bs-placement="top" href="https://corporacioneducativaminutodedios.edu.co/" data-bs-title="Corporación Educativa Minuto de Dios" class="d-none d-md-block position-fixed" style="cursor:pointer; bottom:7.5rem; right: 1.5rem; font-size: 3.5rem;">
+    <i class="uil uil-hospital" style="color: #05477d;"></i>
+  </a>
+  <?php }?>
+
+  <!-- MODALES MODALES MODALES MODALES -->
+<?php if($_GET['CodCole']!=50) {?>
+  <div class="modal fade" id="ModalInstructivoIndex" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">INSTRUCTIVO</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column" style="gap: .7rem;">
+
+            <button id="modalFormasIngresoBtn" class="btn" style="background-color: #CAE6FE; color: #1e5fd7;">
+              ¿Cuáles son los métodos de ingreso?
+            </button>
+
+            <button id="modalHistoriaBtn" class="btn" style="background-color: #CAE6FE; color: #1e5fd7;">
+              ¿Cómo ver la historia clínica?
+            </button>
+
+            <button id="modalInformacionBtn" class="btn" style="background-color: #CAE6FE; color: #1e5fd7;">
+              ¿Cómo ver la información del estudiante?
+            </button>
+
+            <button id="informeAcademicoBtn" class="btn" style="background-color: #CAE6FE; color: #1e5fd7;">
+              ¿Cómo ver el informe académico?
+            </button>
+
+            <button id="modalObservadorBtn" class="btn" style="background-color: #CAE6FE; color: #1e5fd7;">
+              ¿Qué es el observador del estudiante?
+            </button>
+
+            <button id="modalEstadoCuentaBtn" class="btn" style="background-color: #CAE6FE; color: #1e5fd7;">
+              ¿Cómo ver mi estado de cuenta?
+            </button>
+
+            <button id="modalPagoPSEBtn" class="btn" style="background-color: #CAE6FE; color: #1e5fd7;">
+              ¿Cómo pagar por PSE?
+            </button>
+
+          </div>                        
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3" style="column-gap: .5rem;">
+          <button type="button" class="btn cerrarLaModal" style="background-color: #ed7160;">Cerrar</button>
+          <button type="button" class="btn siguienteModal" style="background-color: #05437A;">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php }?>
+
+  <div class="modal fade" id="modalFormasIngreso" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">MÉTODOS DE INGRESO</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div style="color: black;">
+            <p style="font-size: 20px; color: #76358B;">CÓMO INGRESAR A ESTUDIANTESNET</p>
+            <p style="font-size: 18px;">Selecciona si eres padre o estudiante</p>
+            <p style="font-size: 16px;">Solo debes hacer clic en el <strong>botón morado</strong> con la flecha ubicado en la parte superior del formulario, si ves la joven entrarás como estudiante y si ves al joven ingresarás como padre de familia o acudiente.</p>
+            <div class="row">
+              <img class="my-2 col-12 col-md-6" src="../imagenes/EstudiantesNET/instructivoHija.png">
+              <img class="my-2 col-12 col-md-6" src="../imagenes/EstudiantesNET/instructivoPadre.png">
+            </div>
+            <div class="mt-4">
+              <p style="font-size: 20px; color: #76358B;">CÓMO INGRESAR A ESTUDIANTESNET</p>
+              <p class="mt-4" style="font-size: 18px; color: #05437A;">INGRESO COMO ESTUDIANTE</p>
+              <p style="font-size: 16px;">Si eres estudiante podrás ingresar con tu usuario y contraseña; o con tu correo institucional; o una clave de acceso rápido, con este último método enviaremos una clave a tu correo que podrás usar durante todo el día.</p>
+              <p class="mt-4" style="font-size: 18px; color: #05437A;">INGRESO COMO PADRE</p>
+              <p style="font-size: 16px;">Si eres padre podrás acceder con tu usuario y contraseña; o ingresando tu usuario y presionando el botón clave de acceso rápido, de esta manera se te enviará una clave a tu correo que podrás usar durante todo el día. Recuerda que tu usuario es el número de documento o el correo electrónico que tenemos registrados en nuestras bases de datos.</p>
+            </div>
+          </div>                        
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3 mt-4" style="column-gap: .5rem;">
+          <button type="button" class="btn anteriorModal" style="background-color: #ed7160;">Anterior</button>
+          <button type="button" class="btn siguienteModal2" style="background-color: #05437A;">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalHistoriaClinica" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">HISTORIA CLÍNICA</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+            <p style="font-size: 20px; color: #76358B;">¿Cómo funciona la historia clínica?</p>
+            <p style="font-size: 16px;">Introducción al módulo de historia clínica para estudiantes</p>
+          <div class="text-center">
+            <iframe style="border-radius: 15px; background-color: #CAE6FE;" class="p-3" width="560" height="315" src="https://www.youtube.com/embed/yZ8ZlWFEC8M?si=Xc36UDTPVPdzFQjS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                     
+          </div>
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3 mt-4" style="column-gap: .5rem;">
+          <button type="button" class="btn anteriorModal2" style="background-color: #ed7160;">Anterior</button>
+          <button type="button" class="btn siguienteModal3" style="background-color: #05437A;">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalInfoAlumn" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">INFORMACIÓN DEL ESTUDIANTE</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+            <p style="font-size: 20px; color: #76358B;">¿Cómo ver la información del estudiante?</p>
+            <p style="font-size: 16px;">Acá se podrá ver la información del alumno, padre, madre o acudientes</p>
+          <div class="text-center">
+            <iframe style="border-radius: 15px; background-color: #CAE6FE;" class="p-3" width="560" height="315" src="https://www.youtube.com/embed/HAjg4eM1OVs?si=v5XHDETIdk9qSuzF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>             
+          </div>
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3 mt-4" style="column-gap: .5rem;">
+          <button type="button" class="btn anteriorModal3" style="background-color: #ed7160;">Anterior</button>
+          <button type="button" class="btn siguienteModal4" style="background-color: #05437A;">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalInformeAcademico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">INFORME ACADÉMICO</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+            <p style="font-size: 20px; color: #76358B;">¿Cómo funciona el informe académico?</p>
+            <p style="font-size: 16px;">En este módulo podrás ver las notas del estudiante, logros y observaciones</p>
+          <div class="text-center">
+            <iframe style="border-radius: 15px; background-color: #CAE6FE;" class="p-3" width="560" height="315" src="https://www.youtube.com/embed/-GH2EkHRUlU?si=gISZKIPFthtzC4RM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                     
+          </div>
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3 mt-4" style="column-gap: .5rem;">
+          <button type="button" class="btn anteriorModal4" style="background-color: #ed7160;">Anterior</button>
+          <button type="button" class="btn siguienteModal5" style="background-color: #05437A;">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalObservadorEstu" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">OBSERVADOR DEL ESTUDIANTE</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+            <p style="font-size: 20px; color: #76358B;">¿Para qué es el observador del estudiante?</p>
+            <p style="font-size: 16px;">Acá se podrán ver las observaciones que se le han hecho al estudiante, quién la hizo y por qué se la hicieron.</p>
+          <div class="text-center">
+            <iframe style="border-radius: 15px; background-color: #CAE6FE;" class="p-3" width="560" height="315" src="https://www.youtube.com/embed/T1WeLLPbWbY?si=yUA0c7_Wx3uoUsuw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                 
+          </div>
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3 mt-4" style="column-gap: .5rem;">
+          <button type="button" class="btn anteriorModal5" style="background-color: #ed7160;">Anterior</button>
+          <button type="button" class="btn siguienteModal6" style="background-color: #05437A;">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalPagosInstructivo" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">ESTADO DE CUENTA</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+            <p style="font-size: 20px; color: #76358B;">Cómo ver mi estado de cuenta?</p>
+            <p style="font-size: 16px;">En esta sección se podrán ver reflejados los pagos, el tipo de pago y la descripción de cada uno.</p>
+          <div class="text-center">
+            <iframe style="border-radius: 15px; background-color: #CAE6FE;" class="p-3" width="560" height="315" src="https://www.youtube.com/embed/3Rgrnc3uef8?si=22oZ_Qn4UhkdsA5k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>             
+          </div>
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3 mt-4" style="column-gap: .5rem;">
+          <button type="button" class="btn anteriorModal6" style="background-color: #ed7160;">Anterior</button>
+          <button type="button" class="btn siguienteModal7" style="background-color: #05437A;">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalPagoPorPse" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b54;">
+          <h5 class="modal-title" style="color: white;">PAGO POR PSE</h5>
+          <button style="color: white;" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="color: black;">
+            <p style="font-size: 20px; color: #76358B;">¿Cómo pagar por PSE?</p>
+            <p style="font-size: 16px;">En este módulo se podrá hacer el pago mediante PSE</p>
+          <div class="text-center">
+            <iframe style="border-radius: 15px; background-color: #CAE6FE;" class="p-3" width="560" height="315" src="https://www.youtube.com/embed/axsnCCy4XZY?si=tm4dAiBw8Hc_7stA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                    
+          </div>
+        </div>
+        <div class="mb-2 d-flex justify-content-end mr-3 mt-4" style="column-gap: .5rem;">
+          <button type="button" class="btn anteriorModal7" style="background-color: #ed7160;">Anterior</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<script language=Javascript>
+
+  document.addEventListener('DOMContentLoaded', function () {
+      var myModal = new bootstrap.Modal(document.getElementById('ModalInstructivoIndex'));
+      var myModalForms = new bootstrap.Modal(document.getElementById('modalFormasIngreso'))
+      var myHistoria = new bootstrap.Modal(document.getElementById('modalHistoriaClinica'))
+      var myInfo = new bootstrap.Modal(document.getElementById('modalInfoAlumn'))
+      var myInformeAcademico = new bootstrap.Modal(document.getElementById('modalInformeAcademico'))
+      var myObservadorEstu = new bootstrap.Modal(document.getElementById('modalObservadorEstu'))
+      var myPagosInstructivo = new bootstrap.Modal(document.getElementById('modalPagosInstructivo'))
+      var myPagoPSE = new bootstrap.Modal(document.getElementById('modalPagoPorPse'))
+
+      document.getElementById('modalInstructivoLink').addEventListener('click', function () {
+          myModal.show();
+      });
+      document.getElementById('modalHistoriaBtn').addEventListener('click', function () {
+        myHistoria.show();
+        myModal.hide();
+      });
+      document.getElementById('modalPagoPSEBtn').addEventListener('click', function () {
+        myPagoPSE.show();
+        myModal.hide();
+      });
+      document.getElementById('modalObservadorBtn').addEventListener('click', function () {
+        myObservadorEstu.show();
+        myModal.hide();
+      });
+      document.getElementById('modalEstadoCuentaBtn').addEventListener('click', function () {
+        myPagosInstructivo.show();
+        myModal.hide();
+      });
+      document.getElementById('informeAcademicoBtn').addEventListener('click', function () {
+        myInformeAcademico.show();
+        myModal.hide();
+      });
+      document.getElementById('modalFormasIngresoBtn').addEventListener('click', function () {
+        myModalForms.show();
+        myModal.hide();
+      });
+      document.getElementById('modalInformacionBtn').addEventListener('click', function () {
+        myInfo.show();
+        myModal.hide();
+      });
+      document.querySelector('.cerrarLaModal').addEventListener('click', function () {
+          myModal.hide();
+      }); 
+      document.querySelector('.siguienteModal').addEventListener('click', function () {
+          myModal.hide();
+          myModalForms.show();
+      });
+      document.querySelector('.anteriorModal').addEventListener('click', function () {
+          myModal.show();
+          myModalForms.hide();
+      }); 
+      document.querySelector('.siguienteModal2').addEventListener('click', function () {
+          myModalForms.hide();
+          myHistoria.show();
+      });
+      document.querySelector('.anteriorModal2').addEventListener('click', function () {
+          myModalForms.show();
+          myHistoria.hide();
+      });
+      document.querySelector('.siguienteModal3').addEventListener('click', function () {
+          myInfo.show();
+          myHistoria.hide();
+      });
+      document.querySelector('.anteriorModal3').addEventListener('click', function () {
+          myInfo.hide();
+          myHistoria.show();
+      });   
+      document.querySelector('.anteriorModal4').addEventListener('click', function () {
+          myInformeAcademico.hide();  
+          myInfo.show();
+      });   
+      document.querySelector('.siguienteModal4').addEventListener('click', function () {
+          myInformeAcademico.show();
+          myInfo.hide();
+      });
+      document.querySelector('.siguienteModal5').addEventListener('click', function () {
+          myObservadorEstu.show();
+          myInformeAcademico.hide();
+      });  
+      document.querySelector('.anteriorModal5').addEventListener('click', function () {
+          myObservadorEstu.hide();
+          myInformeAcademico.show();
+      });   
+      document.querySelector('.siguienteModal6').addEventListener('click', function () {
+          myPagosInstructivo.show();
+          myObservadorEstu.hide();
+      }); 
+      document.querySelector('.anteriorModal6').addEventListener('click', function () {
+          myPagosInstructivo.hide();
+          myObservadorEstu.show();
+      });   
+      document.querySelector('.siguienteModal7').addEventListener('click', function () {
+          myPagoPSE.show();
+          myPagosInstructivo.hide();
+      });
+      document.querySelector('.anteriorModal7').addEventListener('click', function () {
+          myPagoPSE.hide();
+          myPagosInstructivo.show();
+      });
+  });
+
+  $(function() {
+    $('#FrmRecuperarClave,#DivLoginPadre').hide();
+  });
+
+  function MostrarDatoObser(msg, mTipo = false) {
+    Swal.fire({
+      icon: 'error',
+      title: 'DATOS INCORRECTOS',
+      text: 'El código o la contraseña no son las correctas',
+      timer: 1500,
+      timerProgressBar: true,
+      // footer: '<a href="#">Olvidé mi contraseña</a>',
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+  }
+
+  function ValidarIngreso() {
+    mRetorno = true;
+    ele = document.getElementById("Usuario");
+    if (ele.value.length > 5) {
+      ele.style.backgroundColor = '#fff';
+    } else {
+      ele.style.backgroundColor = '#f00';
+      mRetorno = false;
+    }
+    ele = document.getElementById("Clave");
+    if (ele.value) {
+      ele.style.backgroundColor = '#fff';
+    } else {
+      ele.style.backgroundColor = '#f00';
+      mRetorno = false;
+    }
+    if (mRetorno) {
+      ObjFrm = document.getElementById("sign-up-form");
+      ObjFrm.action = 'estudiantecontrol.php';
+      ObjFrm.submit();
+    }
+  }
+
+  function ValidarIngresoPadre(ObjFrm) {
+    mRetorno = true;
+    ele = ObjFrm.DocumentoPapas;
+    if (ele.value.length > 5) {
+      ele.style.backgroundColor = '#fff';
+    } else {
+      ele.style.backgroundColor = '#f00';
+      mRetorno = false;
+    }
+    ele = ObjFrm.ClavePapas;
+    if (ele.value) {
+      ele.style.backgroundColor = '#fff';
+    } else {
+      ele.style.backgroundColor = '#f00';
+      mRetorno = false;
+    }
+    ObjFrm.action = 'estudiantecontrol.php';
+    if (mRetorno) {
+      ObjFrm.submit();
+    }
+  }
+  var Normalize = (function() {
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç ",
+      to = "AAAAAEEEEIIIIOOOOUUUUAAAAAEEEEIIIIOOOOUUUUNNCC",
+      mapping = {};
+    for (var i = 0, j = from.length; i < j; i++)
+      mapping[from.charAt(i)] = to.charAt(i);
+    return function(str) {
+      var ret = [];
+      for (var i = 0, j = str.length; i < j; i++) {
+        var c = str.charAt(i);
+        if (mapping.hasOwnProperty(str.charAt(i)))
+          ret.push(mapping[c]);
+        else
+          ret.push(c);
+      }
+      return ret.join('');
+    }
+
+  })();
+
+  function EnviarRecuperarClave(Frm) {
+    $("#BotIrRecuperarClave").hide();
+    mRetorno = true;
+    ele = Frm.NomAlum;
+    if (ele.value) {
+      ele.style.backgroundColor = '#fff';
+    } else {
+      ele.style.backgroundColor = '#f00';
+      mRetorno = false;
+    }
+    expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    ele = Frm.Email;
+    if (expr.test(ele.value)) {
+      ele.style.backgroundColor = '#fff';
+    } else {
+      ele.style.backgroundColor = '#f00';
+      mRetorno = false;
+    }
+    if (mRetorno) {
+      document.getElementById('DivResultado').innerHTML = "Espere por favor";
+      $.ajax({
+        url: '../recuperarclave.php',
+        type: 'get',
+        cache: false,
+        data: {
+          TipoGrabar: '<?php echo md5('EstudianteRecuperarClave' . date('d')); ?>',
+          NomAlum: Normalize(document.getElementById('NomAlum').value),
+          Email: document.getElementById('Email').value
+        }
+      }).done(function(html) {
+        if (html == "Enviado") {
+          document.getElementById('DivResultado').innerHTML = "Se ha enviado un mensaje a tu cuenta con una CLAVE de acceso rápido para que pueda <a class='btn text-center mx-auto my-1' style='font-weight:bold; cursor:pointer; background-color: #FCC045; color: #05437A;' onClick='ActualizarDivs(1);' title='Regresar al Formulario de ingreso'>INGRESAR</a>.";
+        } else {
+          document.getElementById('DivResultado').innerHTML = html + "El NOMBRE y el CORREO no aparecen registrados en nuestra base de datos. Revisa nuevamente la información e intenta nuevamente.";
+          $("#BotIrRecuperarClave").show();
+        }
+      });
+    } else {
+      $("#BotIrRecuperarClave").show();
+    }
+  }
+
+  function SolicitarPIN() {
+    Frm=document.getElementById('FrmIngresoPadre');
+    $("#BotSolicitarPIN,#EnviarPadre").hide();
+    mRetorno = true;
+    ele = Frm.DocumentoPapas;
+    if (ele.value) {
+      ele.style.backgroundColor = '#fff';
+    } else {
+      ele.style.backgroundColor = '#f00';
+      mRetorno = false;
+    }
+    if (mRetorno) {
+      document.getElementById('DivResultadoPadre').innerHTML = "Espere por favor";
+      $.ajax({
+        url: '../recuperarclave.php',
+        type: 'get',
+        cache: false,
+        data: {
+          TipoGrabar: '<?php echo md5('PapasSolicitarPIN' . date('d')); ?>',
+          DocumentoPapas: document.getElementById('DocumentoPapas').value
+        }
+      }).done(function(html) {
+        if (html == "Enviado") {
+          document.getElementById('DivResultadoPadre').innerHTML = "Hemos enviado un mensaje a tu cuenta con un PIN para que puedas </br>utilizar el token en el campo contraseña";
+          $("#BotSolicitarPIN,#EnviarPadre").show();
+        } else {
+          document.getElementById('DivResultadoPadre').innerHTML = html + "El NÚMERO DE DOCUMENTO y el CORREO no aparecen registrados en nuestra base de datos. Revisa nuevamente la información e intenta nuevamente.";
+          $("#BotSolicitarPIN,#EnviarPadre").show();
+        }
+      });
+    } else {
+      MostrarDatoObser("Debe diligenciar el número de documento o correo del padre de familia, registrados en nuestra base de datos.");
+      $("#BotSolicitarPIN,#EnviarPadre").show();
+    }
+  }
+
+  function ActualizarDivs(mOpc) {
+    if (mOpc == 1) {
+      $('#sign-up-form').show(500);
+      $('#DivLoginPadre,#FrmRecuperarClave').hide(500);
+    } else if (mOpc == 2) {
+      $('#DivLoginPadre').show(500);
+      $('#DivLoginEstudiante,#FrmRecuperarClave').hide(500);
+    } else if (mOpc == 3) {
+      $('#FrmRecuperarClave').show(500);
+      $('#DivLoginEstudiante,#DivLoginPadre').hide(500);
+    }
+  }
+
+  function alertaClaveIncorrecta() {
+    Swal.fire({
+      icon: 'error',
+      title: 'CONTRASEÑA INCORRECTA',
+      text: 'Contraseña incorrecta. Por favor inténtalo de nuevo.'
+    })
+
+  }
+
+
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+</script>
+
+</html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #FFF4D9;
+      background: linear-gradient(104.19deg, #05437A 0%, #FFF4D9 0.01%, #CAE6FE 89.91%, #CAE6FE 89.91%, #CAE6FE 89.91%);
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    .link {
+      color: #ffeba7;
+    }
+
+    .link:hover {
+      color: #c4c3ca;
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    h4 {
+      font-weight: 600;
+      color: #FCC045;
+    }
+
+    h6 span {
+      padding: 0 40px;
+      font-weight: 700;
+      color: #05477D;
+    }
+
+    img {
+      max-width: 100%;
+      width: 1000px;
+      display: block;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .section {
+      position: relative;
+      width: 100%;
+      display: block;
+    }
+
+    .full-height {
+      min-height: 100vh;
+    }
+
+    [type="checkbox"]:checked,
+    [type="checkbox"]:not(:checked) {
+      display: none;
+    }
+
+    .checkbox:checked+label,
+    .checkbox:not(:checked)+label {
+      position: relative;
+      display: block;
+      text-align: center;
+      width: 60px;
+      height: 16px;
+      border-radius: 8px;
+      padding: 0;
+      margin: 10px auto;
+      cursor: pointer;
+      background-color: #05477D;
+    }
+
+    .checkbox:checked+label:before,
+    .checkbox:not(:checked)+label:before {
+      position: absolute;
+      display: block;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: #FFF4D9;
+      background-color: #76358B;
+      font-family: 'unicons';
+      content: '\eb4f';
+      z-index: 20;
+      top: -10px;
+      left: -10px;
+      line-height: 36px;
+      text-align: center;
+      font-size: 24px;
+      transition: all 0.5s ease;
+    }
+
+    .checkbox:checked+label:before {
+      transform: translateX(44px) rotate(-270deg);
+    }
+
+    .card-3d-wrap {
+      position: relative;
+      width: 440px;
+      max-width: 100%;
+      height: 475px;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      perspective: 800px;
+      margin-top: 60px;
+    }
+
+    .card-3d-wrapper {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      transition: all 600ms ease-out;
+    }
+
+    .card-front,
+    .card-back {
+      width: 100%;
+      height: 100%;
+      background-color: #05477D;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%237E558B' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23FFFFFF'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
+      /* background-image: url('/imagenes/imagenes/loginESTUNET.jpg'); */
+      /* background-size: cover; */
+      position: absolute;
+      border-radius: 6px;
+      -webkit-transform-style: preserve-3d;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    .checkbox:checked~.card-3d-wrap .card-3d-wrapper {
+      transform: rotateY(180deg);
+    }
+
+    .center-wrap {
+      position: absolute;
+      width: 100%;
+      padding: 0 35px;
+      top: 50%;
+      left: 0;
+      transform: translate3d(0, -50%, 35px) perspective(100px);
+      z-index: 20;
+      display: block;
+    }
+
+
+
+    .form-group {
+      position: relative;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-style {
+      padding: 13px 20px;
+      padding-left: 55px;
+      height: 48px;
+      width: 100%;
+      font-weight: 500;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0.5px;
+      outline: none;
+      color: #76358B;
+      background-color: #E0E8EF;
+      border: none;
+      -webkit-transition: all 200ms linear;
+      transition: all 200ms linear;
+      box-shadow: 0 4px 8px 0 rgba(21, 21, 21, .2);
+    }
+
+    .form-style:focus,
+    .form-style:active {
+      border: none;
+      outline: none;
+      box-shadow: 0 4px 8px 0 rgba(21, 21, 21, .2);
+    }
+
+    .input-icon {
+      position: absolute;
+      top: 0;
+      left: 18px;
+      height: 48px;
+      font-size: 24px;
+      line-height: 48px;
+      text-align: left;
+      -webkit-transition: all 200ms linear;
+      transition: all 200ms linear;
+    }
+
+    .btn {
+      border-radius: 4px;
+      height: 44px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      -webkit-transition: all 200ms linear;
+      transition: all 200ms linear;
+      padding: 0 30px;
+      letter-spacing: 1px;
+      display: -webkit-inline-flex;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      align-items: center;
+      background-color: #FCC045;
+      color: #ffffff;
+    }
+
+    .btn:hover {
+      background-color: #FFF4D9;
+      color: #FCC045;
+      box-shadow: 0 8px 24px 0 rgba(16, 39, 112, .2);
+    }
+  </style>

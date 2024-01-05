@@ -9,25 +9,49 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="bg-cblanco">
-		<Header />
-		<main>
-			<slot />
-		</main>
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-cblanco">
+    <Header />
+    <main>
+      <slot />
+    </main>
 
+    <script type="module">
+		document.addEventListener("DOMContentLoaded", () => {
+		  const navLinks = document.querySelectorAll('.nav-link');
+  
+		  navLinks.forEach(link => {
+			link.addEventListener('click', (event) => {
+			  event.preventDefault();
+  
+			  const targetId = link.getAttribute('href').substring(1); // Elimina el '#' del href
+			  const targetElement = document.getElementById(targetId);
+  
+			  if (targetElement) {
+				const headerHeight = document.querySelector('header').offsetHeight; // Ajusta la altura del encabezado
+				const targetPosition = targetElement.offsetTop - headerHeight;
+  
+				window.scrollTo({
+				  top: targetPosition,
+				  behavior: 'smooth',
+				});
+			  }
+			});
+		  });
+		});
+	  </script>
+  </body>
+</html>
 <style is:global> 
 	*{
 		color: #191E29;
@@ -53,10 +77,17 @@ const { title } = Astro.props;
 		line-height: normal;
 		letter-spacing: -0.26px;
 	}
+	.parrafobold {
+		font-size: 18px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 145%;
+		letter-spacing: 0.18px;
+	}
 	.parrafo {
 		font-size: 16px;
 		font-style: normal;
-		font-weight: 400;
+		font-weight: 500;
 		line-height: 145%;
 		letter-spacing: 0.18px;
 	}
