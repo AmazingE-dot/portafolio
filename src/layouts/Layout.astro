@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
 interface Props {
 	title: string;
@@ -17,37 +18,42 @@ const { title } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body class="bg-cblanco">
     <Header />
+	<ViewTransitions />
     <main>
       <slot />
     </main>
 
     <script type="module">
 		document.addEventListener("DOMContentLoaded", () => {
-		  const navLinks = document.querySelectorAll('.nav-link');
-  
-		  navLinks.forEach(link => {
+		const navLinks = document.querySelectorAll('.nav-link');
+
+		navLinks.forEach(link => {
 			link.addEventListener('click', (event) => {
-			  event.preventDefault();
-  
-			  const targetId = link.getAttribute('href').substring(1); // Elimina el '#' del href
-			  const targetElement = document.getElementById(targetId);
-  
-			  if (targetElement) {
-				const headerHeight = document.querySelector('header').offsetHeight; // Ajusta la altura del encabezado
+			event.preventDefault();
+
+			const targetId = link.getAttribute('href').slice(1); // Utiliza slice(1) en lugar de substring(1)
+			const targetElement = document.getElementById(targetId);
+
+			if (targetElement) {
+				const headerHeight = document.querySelector('header').offsetHeight;
 				const targetPosition = targetElement.offsetTop - headerHeight;
-  
+
 				window.scrollTo({
-				  top: targetPosition,
-				  behavior: 'smooth',
+				top: targetPosition,
+				behavior: 'smooth',
 				});
-			  }
+			}
 			});
-		  });
+		});
 		});
 	  </script>
   </body>
@@ -97,5 +103,12 @@ const { title } = Astro.props;
 		font-weight: 400;
 		line-height: 150%;
 		letter-spacing: 0.42px;
+	}
+	.subparrafolight {
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 300;
+		line-height: 160%;
+		letter-spacing: 0.50px;
 	}
 </style>
