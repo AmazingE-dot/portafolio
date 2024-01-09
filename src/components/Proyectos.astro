@@ -1,38 +1,36 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import Card from "./Card.astro";
 ---
-<Layout title="Sección de proyectos">
-    <div id="Proyectos" class="h-screen flex items-center justify-center mt-20 lg:mt-20 px-10 lg:mx-20 flex-wrap">
-        <div> 
-            <div class="text-center lg:text-left mb-10">
-                <p class="subtitulo text-csecundario text-center">Proyectos</p>
-                <p class="text-cprincipal parrafo text-center mt-6">CREADOS EN UN ENTORNO LABORAL, NO SON PROYECTOS UNIVERSITARIOS NI PERSONALES</p>
-            </div>
-            <div class="grid grid-cols-1 sm:hidden md:hidden lg:grid-cols-2 xl:grid-cols-3 gap-3 mx-auto">
-                <Card 
-                    href="/PortalEducativo"
-                    img="../../src/imgs/ProyectoLogin.webp"
-                    titulo="PORTAL EDUCATIVO"
-                    descripcion="Se crearón las vistas en los módulos para ver las notas de los estudiantes, historial de enfermería, pasarela de pagos, ETC."
-                />
-            </div>
-            <div class="hidden sm:grid grid-cols-2 xl:grid-cols-4 gap-3 mx-auto">
-                <Card 
-                    href="/PortalEducativo"
-                    img="../../src/imgs/ProyectoLogin.webp"
-                    titulo="PORTAL EDUCATIVO"
-                    descripcion="Se crearón las vistas en los módulos para ver las notas de los estudiantes, historial de enfermería, pasarela de pagos, ETC."
-                />
-                <Card 
-                    img="../../src/imgs/ProyectoLogin.webp"
-                    titulo="VISUALIZACIÓN DE METRICAS PARA ENCUESTAS"
-                    descripcion="Se agregaron distintos charts para ver los resultados de las encuestas de manera visual"
-                />
-            </div>
+
+<div id="Proyectos" class="h-screen flex items-center justify-center mt-20 lg:mt-20 px-10 lg:mx-20 flex-wrap">
+    <div> 
+        <div class="text-center lg:text-left mb-10">
+            <p class="subtitulo text-csecundario text-center">Proyectos</p>
+            <p class="text-cprincipal parrafo text-center mt-6">CREADOS EN UN ENTORNO LABORAL, NO SON PROYECTOS UNIVERSITARIOS NI PERSONALES</p>
+        </div>
+        <div class="grid grid-cols-1 sm:hidden md:hidden lg:grid-cols-2 xl:grid-cols-3 gap-3 mx-auto">
+            <Card 
+                href="/PortalEducativo"
+                img="../../src/imgs/ProyectoLogin.webp"
+                titulo="PORTAL EDUCATIVO"
+                descripcion="Se crearón las vistas en los módulos para ver las notas de los estudiantes, historial de enfermería, pasarela de pagos, ETC."
+            />
+        </div>
+        <div class="hidden sm:grid grid-cols-2 xl:grid-cols-4 gap-3 mx-auto">
+            <Card 
+                href="/PortalEducativo"
+                img="../../src/imgs/ProyectoLogin.webp"
+                titulo="PORTAL EDUCATIVO"
+                descripcion="Se crearón las vistas en los módulos para ver las notas de los estudiantes, historial de enfermería, pasarela de pagos, ETC."
+            />
+            <Card 
+                img="../../src/imgs/ProyectoLogin.webp"
+                titulo="VISUALIZACIÓN DE METRICAS PARA ENCUESTAS"
+                descripcion="Se agregaron distintos charts para ver los resultados de las encuestas de manera visual"
+            />
         </div>
     </div>
-    <div class="flex items-center justify-center sm:hidden">
-        <a href="#" class="p-3 bg-cprincipal text-cblanco rounded-lg">VER TODOS LOS PROYECTOS</a>
-    </div>
-</Layout>
+</div>
+<div class="flex items-center justify-center sm:hidden">
+    <a href="#" class="p-3 bg-cprincipal text-cblanco rounded-lg">VER TODOS LOS PROYECTOS</a>
+</div>
