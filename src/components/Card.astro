@@ -4,15 +4,23 @@ interface Props {
     img?:string
     titulo?:string
     descripcion?: string
+    tecno1?: string
+    tecno2?: string
+    tecno3?: string
 }
 
-const { href, img, titulo, descripcion } = Astro.props
+const { href, img, titulo, descripcion, tecno1, tecno2, tecno3 } = Astro.props
 ---
 
 <div class="max-w-72 bg-cblanco rounded-lg shadow mx-auto flex flex-col justify-between">
     <div>
         <img class="rounded-t-lg" src={img} alt="" />
         <div class="p-4">
+            <div class="my-3 flex flex-wrap gap-1">
+                <p class="bg-csecundario text-cblanco py-1 px-2 rounded-lg"> {tecno1} </p>
+                <p class="bg-csecundario text-cblanco py-1 px-2 rounded-lg"> {tecno2} </p>
+                <p class="bg-csecundario text-cblanco py-1 px-2 rounded-lg"> {tecno3} </p>
+            </div>
             <h5 class="mb-2 subtitulo text-csecundario"> {titulo} </h5>
             <p class="mb-3 font-normal text-cazuloscuro"> {descripcion}  </p>
         </div>
@@ -26,16 +34,3 @@ const { href, img, titulo, descripcion } = Astro.props
         </a>
     </div>
 </div>
-
-    
-
-
-    <style>
-    .hover-flechita svg {
-      transition: transform 0.3s ease-in-out;
-    }
-  
-    .hover-flechita:hover svg {
-      transform: translateX(3px);
-    }
-  </style>

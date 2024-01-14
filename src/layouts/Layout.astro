@@ -88,4 +88,11 @@ const { title } = Astro.props;
 		line-height: 160%;
 		letter-spacing: 0.50px;
 	}
+    .hover-flechita svg {
+      transition: transform 0.3s ease-in-out;
+    }
+  
+    .hover-flechita:hover svg {
+      transform: translateX(3px);
+    }
 </style>
