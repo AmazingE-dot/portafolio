@@ -2,21 +2,46 @@
 
 ---
 
-<header class="fixed w-full top-0 px-10 lg:px-32 py-6 bg-cblanco z-50">
-    <div class="flex flex-row items-center justify-between">
-        <div class="subtitulo text-csecundario lg:block hidden">
-            <a href="/portafolio/">{`< EduDev />`}</a>
-        </div>
-        <div class="space-x-12 pararfo lg:flex">
-            <button class="lg:hidden">
-                <svg class="fill-cprincipal font-bold" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-              </svg>
-            </button>
-            <a class="hover:text-cprincipal transition-all ease-in-out hover:scale-110 lg:block hidden" href="/portafolio/#Inicio">Inicio</a>
-            <a class="nav-link hover:text-cprincipal transition-all ease-in-out hover:scale-110 lg:block hidden" href="/portafolio/#Proyectos">Proyectos</a>
-            <a class="hover:text-cprincipal transition-all ease-in-out hover:scale-110 lg:block hidden" href="/portafolio/#SobreMi">Sobre mi</a>
-        </div>
+<header class="fixed w-full top-0 px-10 lg:px-32 py-6 bg-cblanco">
+  <div class="flex flex-row items-center justify-between">
+      <div class="subtitulo text-csecundario lg:block hidden">
+          <a href="/portafolio/">{`< EduDev />`}</a>
+      </div>
+      <div class="space-x-12 pararfo lg:flex">
+          <button id="menuBtn" class="lg:hidden">
+              <svg class="fill-cprincipal font-bold" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+            </svg>
+          </button>
+          <a class="hover:text-cprincipal transition-all ease-in-out hover:scale-110 lg:block hidden" href="/portafolio/#Inicio">Inicio</a>
+          <a class="nav-link hover:text-cprincipal transition-all ease-in-out hover:scale-110 lg:block hidden" href="/portafolio/#Proyectos">Proyectos</a>
+          <a class="hover:text-cprincipal transition-all ease-in-out hover:scale-110 lg:block hidden" href="/portafolio/#SobreMi">Sobre mi</a>
+      </div>
+  </div>
+  <div id="menuMobile" class="hidden w-full lg:hidden" id="navbar-hamburger">
+      <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+        <li>
+          <a href="/portafolio/#Inicio" class="block py-2 px-3" aria-current="page">Inicio</a>
+        </li>
+        <li>
+          <a href="/portafolio/#Proyectos" class="block py-2 px-3">Proyectos</a>
+        </li>
+        <li>
+          <a href="/portafolio/#SobreMi" class="block py-2 px-3">Sobre mi</a>
+        </li>
+      </ul>
     </div>
 </header>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const menuBtn = document.getElementById('menuBtn');
+      const menuMobile = document.getElementById('menuMobile');
+
+      if (menuBtn && menuMobile) {
+          menuBtn.addEventListener('click', function() {
+              menuMobile.classList.toggle('hidden');
+          });
+      }
+  });
+</script>
