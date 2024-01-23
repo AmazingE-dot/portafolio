@@ -1,8 +1,8 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-import Header from '../components/Header.astro';
+import { ViewTransitions } from "astro:transitions";
+import Header from "../components/Header.astro";
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -15,84 +15,90 @@ const { title } = Astro.props;
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/portafolio/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css"
+    />
 
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body class="bg-cblanco">
     <Header />
-	<ViewTransitions />
+    <ViewTransitions />
     <main>
       <slot />
     </main>
-
-
   </body>
 </html>
-<style is:global> 
-	*{
-		color: #191E29;
-		font-family: 'Nunito', sans-serif;
-	}
-	html {
-		scroll-behavior: smooth;
-	}
-	.itemGradient {
-        fill: url(#grad);
-    }
-	.principal {
-		font-size: 34px;
-		font-style: normal;
-		font-weight: 700;
-		line-height: normal;
-		letter-spacing: -1.32px;
-	}
-	.subtitulo {
-		font-size: 22px;
-		font-style: normal;
-		font-weight: 700;
-		line-height: normal;
-		letter-spacing: -0.26px;
-	}
-	.parrafobold {
-		font-size: 18px;
-		font-style: normal;
-		font-weight: 700;
-		line-height: 145%;
-		letter-spacing: 0.18px;
-	}
-	.parrafo {
-		font-size: 16px;
-		font-style: normal;
-		font-weight: 500;
-		line-height: 145%;
-		letter-spacing: 0.18px;
-	}
-	.subparrafo {
-		font-size: 14px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: 150%;
-		letter-spacing: 0.42px;
-	}
-	.subparrafolight {
-		font-size: 12px;
-		font-style: normal;
-		font-weight: 300;
-		line-height: 160%;
-		letter-spacing: 0.50px;
-	}
-    .hover-flechita svg {
-      transition: transform 0.3s ease-in-out;
-    }
-  
-    .hover-flechita:hover svg {
-      transform: translateX(3px);
-    }
+<style is:global>
+  * {
+    color: #191e29;
+    font-family: "Nunito", sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .itemGradient {
+    fill: url(#grad);
+  }
+  .principal {
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -1.32px;
+  }
+  .subtitulo {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.26px;
+  }
+  .parrafobold {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 145%;
+    letter-spacing: 0.18px;
+  }
+  .parrafo {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 145%;
+    letter-spacing: 0.18px;
+  }
+  .subparrafo {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.42px;
+  }
+  .subparrafolight {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 160%;
+    letter-spacing: 0.5px;
+  }
+  .hover-flechita svg {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hover-flechita:hover svg {
+    transform: translateX(3px);
+  }
 </style>
