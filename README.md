@@ -7,6 +7,7 @@
 - **Astro:** 🚀 Un marco de construcción de sitios web ultrarrápido y moderno 🚀.
 - **Tailwind CSS:** Un marco de diseño utilitario que agiliza el desarrollo y garantiza un diseño consistente.
 - **HTML, CSS, JavaScript:** Estas tecnologías fundamentales han sido empleadas para estructurar, estilizar y dotar de interactividad a las distintas secciones del portafolio.
+- **GitHub Actions** Este proyecto incorpora GitHub Actions para garantizar una integración continua y eficiente. Con la implementación de GitHub Actions, cada vez que se realiza un push en el repositorio se desencadena automáticamente una actualización en mi GitHub Pages, de esta manera siempre estara la ultima versión disponible
 
 ## Características Principales
 
