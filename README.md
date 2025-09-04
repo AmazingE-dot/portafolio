@@ -14,6 +14,5 @@
 - **Diseño Responsivo:** El portafolio está diseñado para ser completamente receptivo, asegurando una experiencia óptima en todos los dispositivos.
 - **Proyectos Destacados:** Explora una variedad de proyectos que destacan mis habilidades y enfoques creativos.
 - **Sección de Habilidades:** Descubre las tecnologías y habilidades en las que me especializo.
-- **Información de Contacto:** Encuentra cómo puedes ponerte en contacto conmigo para oportunidades profesionales o colaboraciones.
 
 ¡Espero que disfrutes explorando mi trabajo! Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto.
